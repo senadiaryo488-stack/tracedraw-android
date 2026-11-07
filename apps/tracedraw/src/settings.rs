@@ -1843,7 +1843,7 @@ impl Default for Settings {
             center_dialogs: true,
             ui_shadows: true,
             colored_icons: false,
-            theme: String::new(),
+            theme: "dark".into(),
             bars: crate::ui::bars::BarLayout::default(),
             bar_items: Default::default(),
             window_maximized: true,
