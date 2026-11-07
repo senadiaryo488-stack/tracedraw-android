@@ -1,0 +1,61 @@
+name: TraceDraw Android APK
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+
+      - name: Install Rust Android targets
+        uses: dtolnay/rust-toolchain@1.97.0
+        with:
+          targets: aarch64-linux-android, x86_64-linux-android
+
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: tracedraw-android
+
+      - name: Build APK and App Bundle
+        shell: bash
+        env:
+          ANDROID_ABIS: arm64-v8a x86_64
+        run: |
+          export ANDROID_NDK_HOME="${ANDROID_NDK_LATEST_HOME:-$ANDROID_NDK_HOME}"
+          echo "Android SDK: $ANDROID_HOME"
+          echo "Android NDK: $ANDROID_NDK_HOME"
+          if [ ! -f "$ANDROID_HOME/platforms/android-36/android.jar" ]; then
+            yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" >/dev/null
+          fi
+          scripts/android/build.sh
+          ls -lh dist-android/*.apk dist-android/*.aab
+
+      - name: Upload APK files
+        uses: actions/upload-artifact@v4
+        with:
+          name: tracedraw-android-apk
+          path: dist-android/*.apk
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload Android App Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: tracedraw-android-aab
+          path: dist-android/*.aab
+          if-no-files-found: error
+          retention-days: 14
