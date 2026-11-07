@@ -143,7 +143,7 @@ mod tests {
             .expect("an Android store_install");
         assert!(android.trim_start().starts_with("true"));
         assert!(updates.contains(
-            "pub const STORE_PAGE: &str = \"https://play.google.com/store/apps/details?id=dev.tracedraw.app\";"
+            "pub const STORE_PAGE: &str = \"https://github.com/senadiaryo488-stack/tracedraw-android/releases\";"
         ));
         assert!(MANIFEST.contains("package=\"dev.tracedraw.app\""));
     }
