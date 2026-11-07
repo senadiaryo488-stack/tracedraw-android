@@ -81,6 +81,9 @@ public class TraceDrawActivity extends NativeActivity {
     /** The view the on-screen keyboard types into. */
     private TextInputView textInput;
 
+    /** USB host discovery for printer backends (no generic print protocol). */
+    private UsbHost usbHost;
+
     /**
      * Wait, at most `timeoutMs`, until the editor's thread has let go of
      * the activity's window, which it does after backing the drawings up
@@ -110,6 +113,7 @@ public class TraceDrawActivity extends NativeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         textInput = new TextInputView(this);
+        usbHost = new UsbHost(this);
         addContentView(textInput, new ViewGroup.LayoutParams(1, 1));
         // The screen's safe area, read again at every layout (a rotation,
         // a resize) for the editor (#1917).
@@ -167,6 +171,44 @@ public class TraceDrawActivity extends NativeActivity {
         end.setDaemon(true);
         end.start();
         super.onDestroy();
+    }
+
+    // ----- USB host printer discovery -----------------------------------------
+
+    /**
+     * Attached USB devices as tab-separated rows:
+     * deviceName, vendorId, productId, deviceClass, interfaceCount, hasPermission.
+     * The Rust/JNI print UI can call this without needing storage permissions.
+     */
+    public String listUsbDevices() {
+        return usbHost == null ? "" : usbHost.listDevices();
+    }
+
+    /**
+     * Ask Android for permission to access an attached USB device. The name
+     * is the exact deviceName returned by listUsbDevices(). A printer backend
+     * must still implement its own protocol after permission is granted.
+     */
+    public void requestUsbDevicePermission(final String deviceName) {
+        if (usbHost == null || deviceName == null) return;
+        android.hardware.usb.UsbManager manager =
+            (android.hardware.usb.UsbManager) getSystemService(Context.USB_SERVICE);
+        if (manager == null) return;
+        for (android.hardware.usb.UsbDevice device : manager.getDeviceList().values()) {
+            if (deviceName.equals(device.getDeviceName())) {
+                usbHost.requestPermission(device,
+                    new UsbHost.PermissionCallback() {
+                        @Override public void onResult(
+                                android.hardware.usb.UsbDevice grantedDevice,
+                                boolean granted) {
+                            Log.i(TAG, "USB permission " + (granted ? "granted" : "denied")
+                                + " for " + deviceName);
+                        }
+                    });
+                return;
+            }
+        }
+        Log.w(TAG, "USB device is no longer attached: " + deviceName);
     }
 
     // ----- the on-screen keyboard ---------------------------------------------
