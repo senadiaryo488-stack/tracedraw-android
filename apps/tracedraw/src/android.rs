@@ -244,6 +244,44 @@ pub fn launch_extra(name: &str) -> Option<String> {
     .flatten()
 }
 
+/// USB host discovery and per-device permission for printer backends.
+pub mod usb_host {
+    use super::*;
+    use jni::objects::JString;
+    use jni::{jni_sig, jni_str, JValue};
+
+    /// Attached USB devices as tab-separated rows from TraceDrawActivity.
+    /// Each row contains device name, vendor ID, product ID, device class,
+    /// interface count and whether Android permission is already granted.
+    pub fn list_devices() -> Option<String> {
+        with_activity("USB host device list", |env, activity| {
+            let result = env.call_method(
+                activity,
+                jni_str!("listUsbDevices"),
+                jni_sig!("()Ljava/lang/String;"),
+                &[],
+            )?.l()?;
+            let value: JString = env.cast_local::<JString>(result)?;
+            Ok(string_of(env, &value))
+        }).flatten()
+    }
+
+    /// Ask Android to show its per-device USB permission prompt.
+    /// device_name must be copied from one row of list_devices.
+    pub fn request_permission(device_name: &str) -> bool {
+        with_activity("USB host permission request", |env, activity| {
+            let name = env.new_string(device_name)?;
+            env.call_method(
+                activity,
+                jni_str!("requestUsbDevicePermission"),
+                jni_sig!("(Ljava/lang/String;)V"),
+                &[JValue::Object(&name)],
+            )?;
+            Ok(true)
+        }).unwrap_or(false)
+    }
+}
+
 /// Files through the system's document picker and content URIs.
 pub mod documents {
     use super::*;
