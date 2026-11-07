@@ -134,9 +134,9 @@ The print service, the share sheet and the other apps need the file
 itself, and the editor's files (the print PDF, a picture to edit) live in
 the app's private folders, which no other app can open. The activity's
 file provider, `SharedFiles` (`packaging/android/java`, authority
-`dev.tracedraw.app.files`, not exported, `grantUriPermissions`), serves
+`id.senadiaryo488.tracedrawandroid.files`, not exported, `grantUriPermissions`), serves
 the files of the app's files and cache folders under
-`content://dev.tracedraw.app.files/files/<path>` (or `cache/<path>`),
+`content://id.senadiaryo488.tracedrawandroid.files/files/<path>` (or `cache/<path>`),
 with the display name and size share targets ask for; a path that leads
 out of those folders (`..`, links) is refused. The bridge
 (`android::outside`) calls the activity's `printFile` (a
@@ -185,7 +185,7 @@ Rust target and the dependencies' C code), strips it, compiles the activity (`ja
 against the platform's `android.jar`, then `d8 --min-api 24` into one
 `classes.dex`), compiles the launcher icons (`packaging/android/res`,
 from the application icon), links them with the manifest
-(`packaging/android/AndroidManifest.xml`: package `dev.tracedraw.app`,
+(`packaging/android/AndroidManifest.xml`: package `id.senadiaryo488.tracedrawandroid`,
 `TraceDrawActivity` with `android.app.lib_name` = `tracedraw`, minimum
 Android 7.0 / API 24, target Android 16 / API 36, full-screen theme,
 every configuration change handled by the app, `INTERNET` the only
