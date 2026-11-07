@@ -27,7 +27,7 @@ pub const STORE_PAGE: &str = "ms-windows-store://pdp/?productid=9P50L12VHF33";
 /// TraceDraw's page on Google Play, which Help > Updates opens in the
 /// Android app.
 #[cfg(target_os = "android")]
-pub const STORE_PAGE: &str = "https://play.google.com/store/apps/details?id=dev.tracedraw.app";
+pub const STORE_PAGE: &str = "https://github.com/senadiaryo488-stack/tracedraw-android/releases";
 /// How often the check at start runs, seconds.
 pub const DAILY: u64 = 24 * 60 * 60;
 
