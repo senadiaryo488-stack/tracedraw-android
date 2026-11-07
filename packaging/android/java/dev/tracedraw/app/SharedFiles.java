@@ -2,7 +2,7 @@
 // editor hands to another app (a print PDF for the share sheet, a picture
 // for an editing app) live in the app's private folders, which no other
 // app can open. This provider serves them under content URIs
-// (content://id.senadiaryo488.tracedrawandroid.files/<path inside the folder>); it is not
+// (content://dev.tracedraw.app.files/<path inside the folder>); it is not
 // exported, so an app reaches a file only through the grant the intent
 // that names it carries, and only files inside the app's own files and
 // cache folders are served. An editing app given write access writes the
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SharedFiles extends ContentProvider {
     /** The provider's authority, as the manifest names it. */
-    static final String AUTHORITY = "id.senadiaryo488.tracedrawandroid.files";
+    static final String AUTHORITY = "dev.tracedraw.app.files";
 
     /** The folders whose files are served: the app's files and cache folders. */
     private static File[] roots(Context context) {
