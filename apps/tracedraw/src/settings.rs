@@ -1843,7 +1843,7 @@ impl Default for Settings {
             center_dialogs: true,
             ui_shadows: true,
             colored_icons: false,
-            theme: "dark".into(),
+            theme: if cfg!(target_os = "android") { "dark".into() } else { String::new() },
             bars: crate::ui::bars::BarLayout::default(),
             bar_items: Default::default(),
             window_maximized: true,
