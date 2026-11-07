@@ -141,7 +141,39 @@ impl Default for NewDocSettings {
             cmyk_profile: "Generic CMYK (open)".into(),
             gray_profile: GRAY_PROFILES[0].into(),
             intent: INTENTS[1].into(),
-            saved_presets: Vec::new(),
+            // Print-shop presets shown in File > New on a fresh profile.
+            // Large-format banners use 72 DPI to keep raster previews/exports
+            // manageable; small-format stickers and cards use 300 DPI.
+            saved_presets: vec![
+                SavedPreset {
+                    name: "Banner 3 x 1 m - 72 DPI".into(),
+                    values: PresetValues { rgb: false, page_size: CUSTOM.into(), width_mm: 3000.0, height_mm: 1000.0, units: "mm".into(), dpi: 72.0 },
+                },
+                SavedPreset {
+                    name: "Banner 4 x 1 m - 72 DPI".into(),
+                    values: PresetValues { rgb: false, page_size: CUSTOM.into(), width_mm: 4000.0, height_mm: 1000.0, units: "mm".into(), dpi: 72.0 },
+                },
+                SavedPreset {
+                    name: "Banner 4 x 1.5 m - 72 DPI".into(),
+                    values: PresetValues { rgb: false, page_size: CUSTOM.into(), width_mm: 4000.0, height_mm: 1500.0, units: "mm".into(), dpi: 72.0 },
+                },
+                SavedPreset {
+                    name: "Spanduk 2 x 1 m - 72 DPI".into(),
+                    values: PresetValues { rgb: false, page_size: CUSTOM.into(), width_mm: 2000.0, height_mm: 1000.0, units: "mm".into(), dpi: 72.0 },
+                },
+                SavedPreset {
+                    name: "X-Banner 60 x 160 cm - 150 DPI".into(),
+                    values: PresetValues { rgb: false, page_size: CUSTOM.into(), width_mm: 600.0, height_mm: 1600.0, units: "mm".into(), dpi: 150.0 },
+                },
+                SavedPreset {
+                    name: "Stiker 10 x 10 cm - 300 DPI".into(),
+                    values: PresetValues { rgb: false, page_size: CUSTOM.into(), width_mm: 100.0, height_mm: 100.0, units: "mm".into(), dpi: 300.0 },
+                },
+                SavedPreset {
+                    name: "Kartu Nama 9 x 5.5 cm - 300 DPI".into(),
+                    values: PresetValues { rgb: false, page_size: CUSTOM.into(), width_mm: 90.0, height_mm: 55.0, units: "mm".into(), dpi: 300.0 },
+                },
+            ],
         }
     }
 }
