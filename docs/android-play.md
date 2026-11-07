@@ -70,7 +70,7 @@ with this key: Play registers its certificate as the upload certificate.
    shows on the listing, an organisation account a D-U-N-S number). Allow
    a few days for the verification.
 2. **Create the app.** Name TraceDraw, default language English (United
-   States), App, Free. The package name `dev.tracedraw.app` is fixed by
+   States), App, Free. The package name `id.senadiaryo488.tracedrawandroid` is fixed by
    the first upload and can never change: keep it.
 3. **Closed testing first.** A personal account created after November
    13, 2023 must run a closed test with at least 12 testers opted in,
