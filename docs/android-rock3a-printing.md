@@ -22,7 +22,7 @@ Do not assume a generic USB bulk transfer or raw PDF bytes are a valid Epson pri
 
 ### HP LaserJet Pro P1102
 
-Do not route this model through the HP Print Service Plugin USB-OTG path: HP's mobile printing support information excludes the P1102 from supported USB-OTG printing. Research a separately licensed/maintainable Android backend or a network/host-computer print bridge before promising direct USB printing. This printer is monochrome; offer grayscale/black density and text/graphics quality controls, not color ICC controls.
+HP's current USB-OTG support list includes the LaserJet Pro P1102/P1102s/P1102w family. Therefore test the official HP Print Service Plugin first on this Android 11 ROCK 3A using the USB Host port. If the plugin does not enumerate or print on this board's Android build, investigate a separately licensed/maintainable Android backend or a network/host-computer print bridge. Confirm the exact P1102 variant and firmware during physical testing. This printer is monochrome; offer grayscale/black density and text/graphics quality controls, not color ICC controls.
 
 ### PDF/system print fallback
 
