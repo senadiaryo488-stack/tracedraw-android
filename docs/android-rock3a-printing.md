@@ -39,4 +39,4 @@ Keep the existing Android PrintManager/PDF path as a fallback for printers suppo
 
 ## Implementation status
 
-The Android manifest now declares optional USB Host hardware capability. This is only a prerequisite. USB enumeration/permission handling, printer-specific backends, ICC UI and physical-device print tests remain to be implemented and validated on the owner's ROCK 3A running Android 11.
+The Android manifest declares optional USB Host hardware capability. Java UsbHost enumerates attached USB devices, reports VID/PID/interface counts and permission state, requests per-device permission, and opens a device after permission. TraceDrawActivity exposes device listing and permission requests; apps/tracedraw/src/android.rs bridges listing and permission requests to Rust. This is discovery/permission plumbing only: printer-specific backends, UI integration, ICC controls and physical-device print tests remain to be implemented and validated on the owner's ROCK 3A running Android 11.
