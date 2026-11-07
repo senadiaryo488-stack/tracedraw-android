@@ -1008,6 +1008,21 @@ mod tests {
     }
 
     #[test]
+    fn fresh_documents_offer_print_shop_presets() {
+        let settings = NewDocSettings::default();
+        let banner = settings.saved_presets.iter().find(|p| p.name == "Banner 3 x 1 m - 72 DPI").unwrap();
+        assert_eq!(banner.values.width_mm, 3000.0);
+        assert_eq!(banner.values.height_mm, 1000.0);
+        assert_eq!(banner.values.dpi, 72.0);
+        let sticker = settings.saved_presets.iter().find(|p| p.name == "Stiker 10 x 10 cm - 300 DPI").unwrap();
+        assert_eq!(sticker.values.width_mm, 100.0);
+        assert_eq!(sticker.values.height_mm, 100.0);
+        assert_eq!(sticker.values.dpi, 300.0);
+        assert!(settings.saved_presets.iter().any(|p| p.name.starts_with("X-Banner")));
+        assert!(settings.saved_presets.iter().any(|p| p.name.starts_with("Kartu Nama")));
+    }
+
+    #[test]
     fn the_profile_lists_offer_the_installed_profiles() {
         // #1033: profiles installed here are listed by their colour space.
         let found = vec![
