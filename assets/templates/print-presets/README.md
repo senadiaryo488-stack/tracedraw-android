@@ -1,6 +1,6 @@
-# Print preset specifications (proposal)
+# Print presets supplied by the Android fork
 
-This directory documents the requested print workflow. The editor implementation is a follow-up Rust UI task; these specs are not yet wired into the editor.
+The dimensions below are installed as saved presets in `apps/tracedraw/src/new_document.rs` and appear in File > New > Preset on a fresh app profile. The list is a starting point; print providers should confirm final dimensions, bleed, resolution and colour profiles before production.
 
 ## Banner presets (document size)
 | Name | Width | Height | Units |
