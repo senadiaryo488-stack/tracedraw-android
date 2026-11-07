@@ -6,7 +6,7 @@
      picker, clipboard, print service and share sheet for it. The version code and name are filled in
      by scripts/android/build.sh from Cargo.toml. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="id.senadiaryo488.tracedrawandroid">
+    package="dev.tracedraw.app">
 
     <!-- Android 7.0 (API 24) and later, built for Android 16 (API 36), the
          level Google Play asks of new apps; the build links against the
@@ -102,7 +102,7 @@
              reaches a file only through the grant of the intent naming it. -->
         <provider
             android:name="dev.tracedraw.app.SharedFiles"
-            android:authorities="id.senadiaryo488.tracedrawandroid.files"
+            android:authorities="dev.tracedraw.app.files"
             android:exported="false"
             android:grantUriPermissions="true" />
     </application>
