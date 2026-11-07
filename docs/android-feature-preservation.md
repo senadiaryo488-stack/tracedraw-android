@@ -51,6 +51,32 @@ Keep the AI Generate panel and all existing capabilities:
 - Preserve user-supplied API keys/settings and explicit user-initiated request behavior.
 - Do not hard-code one provider, remove local-server support, or send prompts/files without user action.
 
+
+## Image editing and clean background removal
+
+Image editing must remain available on Android, including the existing on-device background-removal path. Treat background removal as a core image-editing capability, not only as an AI prompt feature.
+
+### Quality requirements
+
+- Remove backgrounds cleanly while preserving the main subject, including fine edges such as hair, fur, thin lines, transparent objects and product contours where feasible.
+- Avoid visible halos, jagged edges, leftover background pixels, excessive subject cut-off and unwanted holes.
+- Provide a transparent checkerboard preview and export with a real alpha channel (PNG/WebP where supported); do not replace transparency with a white background.
+- Provide edge refinement controls where supported: brush to keep/remove areas, edge radius/smoothing, feather, and restore/erase refinement.
+- Preserve useful details such as hair strands and thin object boundaries; allow the user to inspect at high zoom before applying.
+- Keep the original image unchanged and make the removal reversible/non-destructive.
+- Support manual cleanup after automatic removal. AI-assisted removal may be an optional additional method, but the local/offline path must not be silently removed or replaced.
+- Keep image quality and resolution; do not downsample the source unnecessarily during editing or export.
+
+### Acceptance checks
+
+- Test portraits with hair, people against busy backgrounds, product photos, logos, objects with thin edges, and images with low contrast.
+- Inspect edges at high zoom on light and dark preview backgrounds.
+- Confirm transparent pixels remain transparent in exported PNG/WebP and in reopened files.
+- Confirm undo/redo, restore/erase refinement, and original-image recovery work.
+- Test on the target Android device for memory use and responsiveness; use tiled/progressive processing for large images if needed.
+
+This is a quality and integration requirement. It does not claim the Android background-removal UI or refinement tools have already been implemented or verified.
+
 ## Acceptance / regression checks
 
 Before release, compare Android functionality with the existing TraceDraw feature set and test:
